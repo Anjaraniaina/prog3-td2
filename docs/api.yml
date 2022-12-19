@@ -1,0 +1,247 @@
+openapi: 3.0.0
+servers:
+  - url: https://api.foot.dev/
+info:
+  version: "latest"
+  title: PROG3 - TD2
+paths:
+  /team:
+    get:
+      tags:
+        - Sponsors
+      summary: get all team
+      operationId: getSponsors
+      responses:
+        '200':
+          description: List of team
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sponsor'
+        '500':
+          description: Internal server error
+    post:
+      tags:
+        - Sponsors
+      summary: create new team
+      operationId: createSponsors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSponsor'
+      responses:
+        '200':
+          description: List of created team
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sponsor'
+        '500':
+          description: Internal server error
+    put:
+      tags :
+        - Sponsors
+      summary: update some team
+      operationId: updateSponsors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSponsor'
+      responses:
+        '200':
+          description: List of updated team
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sponsor'
+        '500':
+          description: Internal server error
+  /team/{teamId}:
+    delete:
+      tags :
+        - Sponsors
+      summary: delete a specific team
+      operationId: deleteSponsor
+      parameters:
+        - in: path
+          name: teamId
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Return the deleted team
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sponsor'
+        '500':
+          description: Internal server error
+  /players:
+    get:
+      tags:
+        - Players
+      summary: get all players
+      operationId: getPlayers
+      responses:
+        '200':
+          description: List of players
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Player'
+        '500':
+          description: Internal server error
+    post:
+      tags:
+        - Players
+      summary: create new players
+      operationId: createPlayers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CreatePlayer'
+      responses:
+        '200':
+          description: List of created players
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Player'
+        '500':
+          description: Internal server error
+    put:
+      tags:
+        - Players
+      summary: update some players
+      operationId: updateSponsors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/UpdatePlayer'
+      responses:
+        '200':
+          description: List of updated players
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Player'
+        '500':
+          description: Internal server error
+  /players/{playerId}:
+    delete:
+      tags:
+        - Players
+      summary: delete a specific team
+      operationId: deleteSponsor
+      parameters:
+        - in: path
+          name: playerId
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Return the deleted player
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Player'
+        '500':
+          description: Internal server error
+components:
+  schemas:
+    Sponsor:
+      allOf:
+        - $ref: '#/components/schemas/UpdateSponsor'
+    UpdateSponsor:
+      allOf:
+        - $ref: '#/components/schemas/CreateSponsor'
+      properties:
+        id:
+          type: integer
+    CreateSponsor:
+      type: object
+      properties:
+        name:
+          type: string
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        sponsors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sponsor'
+        players:
+          type: array
+          items:
+            $ref: '#/components/schemas/Player'
+    UpdateTeam:
+      allOf:
+        - $ref: '#/components/schemas/CreateTeam'
+      properties:
+        id:
+          type: integer
+    CreateTeam:
+      type: object
+      properties:
+        name:
+          type: string
+    Player:
+      allOf:
+        - $ref: '#/components/schemas/UpdatePlayer'
+    UpdatePlayer:
+      allOf:
+        - $ref: '#/components/schemas/CreatePlayer'
+      properties:
+        id:
+          type: integer
+    CreatePlayer:
+      type: object
+      properties:
+        name:
+          type: string
+    Match:
+      allOf:
+        - $ref: '#/components/schemas/UpdateMatch'
+    CreateMatch:
+      type: object
+      properties:
+        teams:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Team'
+        datetime:
+          type: string
+          format: datetime
+    UpdateMatch:
+      allOf:
+        - $ref: '#/components/schemas/CreateMatch'
+      properties:
+        id:
+          type: integer
