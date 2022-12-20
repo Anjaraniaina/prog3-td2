@@ -3,7 +3,6 @@ package app.prog.controller;
 import app.prog.controller.mapper.SponsorRestMapper;
 import app.prog.controller.response.SponsorResponse;
 import app.prog.controller.response.CreateSponsorResponse;
-import app.prog.controller.response.UpdateSponsorResponse;
 import app.prog.model.Sponsor;
 import app.prog.service.SponsorService;
 import lombok.AllArgsConstructor;
@@ -26,17 +25,17 @@ public class SponsorController {
     private final SponsorService service;
     private final SponsorRestMapper mapper;
 
-    @GetMapping("/books")
+    @GetMapping("/sponsors")
     public List<SponsorResponse> getSponsors() {
         List<SponsorResponse> list = new ArrayList<>();
         for (Sponsor sponsor : service.getSponsors()) {
             SponsorResponse sponsorResponse = mapper.toRest(sponsor);
             list.add(sponsorResponse);
         }
-        return list;
+        return service.getSponsors().stream().map(mapper::toRest).toList();
     }
 
-    @PostMapping("/books")
+    @PostMapping("/sponsors")
     public List<SponsorResponse> createSponsors(@RequestBody List<CreateSponsorResponse> toCreate) {
         List<Sponsor> domain = toCreate.stream()
                 .map(mapper::toDomain)
@@ -46,8 +45,8 @@ public class SponsorController {
                 .toList();
     }
 
-    @PutMapping("/books")
-    public List<SponsorResponse> updateSponsors(@RequestBody List<UpdateSponsorResponse> toUpdate) {
+    @PutMapping("/sponsors")
+    public List<SponsorResponse> updateSponsors(@RequestBody List<SponsorResponse> toUpdate) {
         List<Sponsor> domain = toUpdate.stream()
                 .map(mapper::toDomain)
                 .toList();
@@ -56,7 +55,7 @@ public class SponsorController {
                 .toList();
     }
 
-    @DeleteMapping("/books/{sponsorId}")
+    @DeleteMapping("/sponsors/{sponsorId}")
     public ResponseEntity<?> deleteSponsor(@PathVariable int sponsorId) {
         Sponsor book = service.findById(sponsorId);
         if (book == null) {

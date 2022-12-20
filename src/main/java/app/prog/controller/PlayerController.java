@@ -3,7 +3,6 @@ package app.prog.controller;
 import app.prog.controller.mapper.PlayerRestMapper;
 import app.prog.controller.response.PlayerResponse;
 import app.prog.controller.response.CreatePlayerResponse;
-import app.prog.controller.response.UpdatePlayerResponse;
 import app.prog.model.Player;
 import app.prog.service.PlayerService;
 import lombok.AllArgsConstructor;
@@ -45,7 +44,7 @@ public class PlayerController {
     }
 
     @PutMapping("/players")
-    public List<PlayerResponse> updatePlayers(@RequestBody List<UpdatePlayerResponse> toUpdate) {
+    public List<PlayerResponse> updatePlayers(@RequestBody List<PlayerResponse> toUpdate) {
         List<Player> domain = toUpdate.stream()
                 .map(mapper::toDomain)
                 .toList();

@@ -1,5 +1,7 @@
 package app.prog.repository;
 
+import app.prog.model.Sponsor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository

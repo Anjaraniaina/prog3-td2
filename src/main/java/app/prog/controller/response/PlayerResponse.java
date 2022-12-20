@@ -8,5 +8,6 @@ import lombok.Data;
 @Data
 @Builder
 public class PlayerResponse {
+    private int id;
     private String name;
 }

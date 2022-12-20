@@ -9,5 +9,5 @@ import lombok.Data;
 @Builder
 public class CreatePlayerResponse {
     private String name;
-    private String particularity;
+    private int number;
 }

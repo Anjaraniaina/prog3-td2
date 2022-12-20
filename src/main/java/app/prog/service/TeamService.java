@@ -7,24 +7,27 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class TeamService {
     private final TeamRepository repository;
 
-    public List<Team> getCategories() {
+    public List<Team> getTeams() {
         return repository.findAll();
     }
 
-    public List<Team> createCategories(List<Team> toCreate) {
+    public List<Team> createTeams(List<Team> toCreate) {
         return repository.saveAll(toCreate);
     }
 
-    public List<Team> updateCategories(List<Team> toUpdate) {
+    public List<Team> updateTeams(List<Team> toUpdate) {
         return repository.saveAll(toUpdate);
     }
 
-    public Team deleteTeam(Integer TeamId) {
+    public Team deleteTeam(int TeamId) {
         Optional<Team> optional = repository.findById(TeamId);
         if (optional.isPresent()) {
             repository.delete(optional.get());

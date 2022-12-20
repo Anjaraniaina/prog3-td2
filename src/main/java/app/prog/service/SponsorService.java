@@ -2,7 +2,6 @@ package app.prog.service;
 
 import app.prog.model.Sponsor;
 import app.prog.repository.SponsorRepository;
-import app.prog.service.SponsorService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,21 +15,20 @@ import java.util.Optional;
 public class SponsorService {
     private final SponsorRepository repository;
 
-    public List<Sponsor> getBooks() {
+    public List<Sponsor> getSponsors() {
         return repository.findAll();
     }
 
 
-    public List<Sponsor> createBooks(List<Sponsor> toCreate) {
+    public List<Sponsor> createSponsors(List<Sponsor> toCreate) {
         return repository.saveAll(toCreate);
     }
 
-    public List<Sponsor> updateBooks(List<Sponsor> toUpdate) {
+    public List<Sponsor> updateSponsors(List<Sponsor> toUpdate) {
         return repository.saveAll(toUpdate);
     }
 
-    //TODO-3: should I use Integer here or int ? Why ?
-    public Sponsor deleteBook(int sponsorId) {
+    public Sponsor deleteSponsor(int sponsorId) {
         Optional<Sponsor> optional = repository.findById(sponsorId);
         if (optional.isPresent()) {
             repository.delete(optional.get());

@@ -1,7 +1,9 @@
 package app.prog.controller;
 
 import app.prog.controller.mapper.TeamRestMapper;
+import app.prog.controller.response.CreateTeamResponse;
 import app.prog.controller.response.TeamResponse;
+import app.prog.model.Team;
 import app.prog.service.TeamService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,27 +25,20 @@ public class TeamController {
     @GetMapping("/teams")
     public List<TeamResponse> getTeams() {
         List<TeamResponse> list = new ArrayList<>();
-        for (Team category : service.getCategories()) {
-            TeamResponse TeamResponse = mapper.toRest(category);
-            list.add(app.prog.controller.response.TeamResponse);
+        for (Team team : service.getTeams()) {
+            TeamResponse TeamResponse = mapper.toRest(team);
+            list.add(TeamResponse);
         }
         return list;
     }
 
-
-
     @PostMapping("/teams")
-    public List<TeamResponse> createCategories(@RequestBody List<TeamResponse> toCreate) {
+    public List<TeamResponse> createTeams(@RequestBody List<CreateTeamResponse> toCreate) {
         List<Team> domain = toCreate.stream()
                 .map(mapper::toDomain)
                 .toList();
-        return service.createCategories(domain).stream()
+        return service.createTeams(domain).stream()
                 .map(mapper::toRest)
                 .toList();
-    }
-
-    @DeleteMapping("/teams/{teamId}")
-    public TeamResponse deleteTeam(@PathVariable Integer teamId) {
-        return mapper.toRest(service.deleteTeam(teamId));
     }
 }

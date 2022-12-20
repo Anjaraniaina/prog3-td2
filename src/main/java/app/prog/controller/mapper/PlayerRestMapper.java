@@ -2,7 +2,6 @@ package app.prog.controller.mapper;
 
 import app.prog.controller.response.PlayerResponse;
 import app.prog.controller.response.CreatePlayerResponse;
-import app.prog.controller.response.UpdatePlayerResponse;
 import app.prog.model.Player;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Component;
 public class PlayerRestMapper {
     public PlayerResponse toRest(Player domain) {
         return PlayerResponse.builder()
-                .id(domain.getId())
                 .name(domain.getName())
                 .build();
     }
@@ -21,7 +19,7 @@ public class PlayerRestMapper {
                 .build();
     }
 
-    public Player toDomain(UpdatePlayerResponse rest) {
+    public Player toDomain(PlayerResponse rest) {
         return Player.builder()
                 .id(rest.getId())
                 .name(rest.getName())
